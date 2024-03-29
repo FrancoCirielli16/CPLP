@@ -54,7 +54,7 @@ Un ejemplo de palabra reservada en el lenguaje Python es if. En Python, if se ut
 ```
 ## Ejercicio 5: 
 ### Dada la siguiente gramática escrita en BNF:
-```py
+```html
 
     - G= ( N, T, S, P)
     - N = {<numero_entero>, <digito> }
@@ -82,7 +82,7 @@ Un ejemplo de palabra reservada en el lenguaje Python es if. En Python, if se ut
 
 Es ambigua por <digito><numero_entero> | <numero_entero><digito> La asociativa es por la izquierda o por la derecha, en este caso se estarían generando DOS arboles de derivación
 
-```py
+```html
 
     - G= ( N, T, S, P)
     - N = {<numero_entero>, <digito> }
@@ -99,7 +99,7 @@ Es ambigua por <digito><numero_entero> | <numero_entero><digito> La asociativa e
 
 
 
-```py
+```html
 
     - G= ( N, T, S, P)
     - N = {<palabra>, <mayuscula>,<minuscula> }
@@ -127,7 +127,7 @@ Es ambigua por <digito><numero_entero> | <numero_entero><digito> La asociativa e
 
 ### Defina en EBNF la gramática para la definición de números reales. Inténtelo desarrollar para BNF y explique las diferencias con la utilización de la gramática EBNF.
 
-```py
+```html
     EBNF
 
     - G= ( N, T, S, P)
@@ -135,12 +135,12 @@ Es ambigua por <digito><numero_entero> | <numero_entero><digito> La asociativa e
     - T = {0,1,2,3,4,5,6,7,8,9,"+","-",","}
     - S = <real>
     - P = {
-        <real> ::= [(+|-)]{<digito>}^+ [,{<digito>}^+]
+        <real> ::= [(+|-)]{<digito>}+ [,{<digito>}+]
         <digito> ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
     }
 ```
 
-```py
+```html
     BNF
 
     - G= ( N, T, S, P)
@@ -193,3 +193,156 @@ BNF parece ser mas dificil de leer a comparacion de EBNF
 
 ###
     e. Conceptos de lenguajes
+
+
+
+
+## Ejercicio 9:
+
+```html
+
+    G = ( N, T, S, P)
+    N = {<real>, <letra>}
+    T = {0..9, A..Z, a..z}
+    S = <real>
+    P = {
+        <identificador> ::= <letra> {<caracter>}*
+        <caracter> ::= (<letra> | <digito>)
+        <letra> ::= (a | ... | z | A | ... | Z)
+        <digito> ::= (0 | ... | 9)
+}
+
+```
+
+![alt text](image-9.png)
+
+
+## Ejercicio 10:
+
+
+### a) Defina con EBNF la gramática para una expresión numérica, dónde intervienen variables y números. Considerar los operadores +, -, * y / sin orden de prioridad. No considerar el uso de paréntesis.
+
+```html
+
+    G = ( N, T, S, P)
+    N = {
+    <elemento>, 
+    <identificador>, 
+    <caracter>, 
+    <numero>, 
+    <digito>, 
+    <letra>, 
+    }
+    T = {0-9, a-Z, +, -, *, /}
+    S = <operacion>
+    P = {
+    <expresion> ::= <elemento> {<termino>}+
+    <termino> ::= {(* | / | + | -)<elemento>}
+
+
+    <elemento> ::= (<identificador> | <numero>)
+    <identificador> ::= <letra>{<caracter>}*
+    <caracter> ::= <digito> | <letra>
+    <numero> ::= {<digito>}+
+    <digito> ::= 0 | ... | 9
+    <letra> ::= a | ... | z | A | ... Z
+    }
+
+``` 
+
+
+### b) A la gramática definida en el ejercicio anterior agregarle prioridad de operadores.
+
+```html
+
+    G = (N, T, S, P)
+    N = {
+        <expresion>,
+        <operacion>,
+        <termino>,
+        <factor>,
+        <variable>,
+        <numero>
+    }
+    T = {0..9, a-z, A-Z, "+", "-", "*", "/"}
+    S = <expresion>
+    P = {
+        <expresion> ::= <termino> {<sumaResta> <termino>}*
+        <termino> ::= <factor> {<multDiv> <factor>}*
+        <factor> ::= <variable> | <numero>
+        <variable> ::= <letra>{<caracter>}*
+        <numero> ::= {<digito>}+
+        <sumaResta> ::= ("+" | "-")
+        <multDiv> ::= ("*" | "/")
+        <digito> ::= 0 | ... | 9
+        <letra> ::= a | ... | z | A | ... | Z
+        <caracter> ::= <digito> | <letra>
+    }
+
+``` 
+
+### c) Describa con sus palabras los pasos y decisiones que tomó para agregarle prioridad de operadores al ejercicio anterior.
+
+la prioridad de operadores a la gramática implica asegurar que las operaciones de multiplicación y división se realicen antes que las operaciones de suma y resta. 
+
+
+## Ejercicio 11: 
+
+
+### La siguiente gramática intenta describir sintácticamente la sentencia for de ADA, indique cuál/cuáles son los errores justificando la respuesta.
+
+```html
+
+N = {
+    <sentencia_for>,
+    <bloque>,
+    <variable>,
+    <letra>,
+    <cadena>,
+    <digito>,
+    <otro>,
+    <operacion>
+}
+
+P = {
+    <llamada_a_funcion>,
+    <numero>,
+    <sentencia>
+}
+
+P = {
+        <sentencia_for> ::= for (i = IN 1..10) loop <bloque> end loop;
+        <variable> ::= <letra> | <cadena>
+        <cadena> ::= {(<letra> | <digito> | <otro>)}+
+        <letra> ::= (a | .. | z | A | .. | Z)
+        <digito> ::= (1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0)
+        <bloque> ::= <sentencia> | <sentencia> <bloque> | <bloque> <sentencia>;
+        <sentencia> ::= <sentencia_asignacion> | <llamada_a_funcion> | <sentencia_if> | <sentencia_for> | <sentencia_while> | <sentencia_switch>
+}
+
+```
+La gramatica posee una tupla de 4 (N, T, S, P) en este caso falta definir T y S. Ademas no esta definidas en N las sentencia_asignacion , sentencia_if, sentencia_while.
+
+Ademas faltaria realizar la produccion de aquellas sentencias que faltan o que no estan definidas, como (otro,numero,sentencia_asignacion , sentencia_if, sentencia_while,llamada_a_funcion,sentencia_switch,oprecion)
+
+
+## Ejercicio 12: 
+
+### R ealice en EBNF la gramática para la definición un tag div en html 5. (Puede ayudarse con el siguiente enlace (https://developer.mozilla.org/es/docs/Web/HTML/Elemento/div)
+
+```html
+
+    <div> ::= "<div>"<bloque>"</div>"
+    <bloque> ::= [0-9]*
+
+```
+
+
+## Ejercicio 13: 
+
+### Defina en EBNF una gramática para la construcción de números primos.¿Qué debería agregar a la gramática para completar el ejercicio?
+
+
+## Ejercicio 14: 
+
+### Sobre un lenguaje de su preferencia escriba en EBNF la gramática para la definición de funciones o métodos o procedimientos (considere los parámetros en caso de ser necesario).
