@@ -106,7 +106,7 @@ Es ambigua por <digito><numero_entero> | <numero_entero><digito> La asociativa e
     - T = {A...Z , a...z}
     - S = <palabra>
     - P = {
-        <palabra> ::= <mayuscula><palabra> | <minusucla><palabra> | <minusculas> | <mayuscula> 
+        <palabra> ::= <mayuscula><palabra> | <minuscula><palabra> | <minusculas> | <mayuscula> 
         <mayuscula> ::= A | B | C | D | E ... | Z 
         <minuscula> ::= a | b | c | d | e ... | z
         }
@@ -135,7 +135,7 @@ Es ambigua por <digito><numero_entero> | <numero_entero><digito> La asociativa e
     - T = {0,1,2,3,4,5,6,7,8,9,"+","-",","}
     - S = <real>
     - P = {
-        <real> ::= [(+|-)]{<digito>}+ [,{<digito>}+]
+        <real> ::= [-]{<digito>}+ [,{<digito>}+]
         <digito> ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
     }
 ```
@@ -202,7 +202,11 @@ BNF parece ser mas dificil de leer a comparacion de EBNF
 ```html
 
     G = ( N, T, S, P)
-    N = {<real>, <letra>}
+    N = {<real>,
+         <letra>,
+         <identificador>,
+         <caracter>,
+         <digito>}
     T = {0..9, A..Z, a..z}
     S = <real>
     P = {
@@ -346,3 +350,5 @@ Ademas faltaria realizar la produccion de aquellas sentencias que faltan o que n
 ## Ejercicio 14: 
 
 ### Sobre un lenguaje de su preferencia escriba en EBNF la gramática para la definición de funciones o métodos o procedimientos (considere los parámetros en caso de ser necesario).
+
+
