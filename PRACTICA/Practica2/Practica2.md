@@ -385,7 +385,7 @@ Ademas faltaria realizar la produccion de aquellas sentencias que faltan o que n
     
     P = {
         <function>::= "function" [<parametros>] "{"  {<codigo>}+ "}"
-        <parametros>::=  "("{<palabra> ","}*")"
+        <parametros>::=  "("{<palabra> [","]}*")"
         <palabra>::= {<letra>}+
         <codigo>::=  { {<letra>}+ {<operadores>} {<letra>}+ }* (|) {<letra>}+';'
         <letra>::= A | B | C | D | E ... Z | a | b | c | d | e | f | g  ... z
