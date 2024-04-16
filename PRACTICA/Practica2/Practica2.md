@@ -348,7 +348,6 @@ Ademas faltaria realizar la produccion de aquellas sentencias que faltan o que n
     S = <tag>
     
     P = {
-
         <tag>::= <div> [{<bloque>}*] "</div>"
         <div>::= "<div"[{<palabra> '=' <palabra>}*]">"
         <palabra> ::= {<letra>}+
