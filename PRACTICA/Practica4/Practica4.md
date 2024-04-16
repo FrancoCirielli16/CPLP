@@ -228,6 +228,12 @@ la palabra clave "delete".
 4. Variable semidinámica: una matriz cuyo tamaño se puede ajustar en tiempo de
 ejecución, pero solo en un punto de control específico del programa.
 
+## Ejercicio 4:
+### a. ¿A qué se denomina variable local y a qué se denomina variable global?
 
+### b. ¿Una variable local puede ser estática respecto de su l-valor? En caso afirmativo dé un ejemplo
 
+### c. Una variable global ¿siempre es estática? Justifique la respuesta.
+
+### d. Indique qué diferencia hay entre una variable estática respecto de su l-valor y una constante
 
