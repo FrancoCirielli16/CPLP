@@ -336,8 +336,27 @@ Ademas faltaria realizar la produccion de aquellas sentencias que faltan o que n
 
 ```html
 
-    <div> ::= "<div>"<bloque>"</div>"
-    <bloque> ::= [0-9]*
+    G = (N, T, S, P)
+    N = {
+        <tag>,
+        <div>,
+        <palabra>,
+        <bloque>,
+        <letra>
+    }
+    T = {A | B | C | D | E ... Z | a | b | c | d | e | f | g  ... z}
+    S = <tag>
+    
+    P = {
+
+        <tag>::= <div> [{<bloque>}*] "</div>"
+        <div>::= "<div"[{<palabra> '=' <palabra>}*]">"
+        <palabra> ::= {<letra>}+
+        <bloque>::= <tag> (|) '<'<palabra>'>' {<palabra>}* '</'<palabra>'>'
+        <letra>::= A | B | C | D | E ... Z | a | b | c | d | e | f | g  ... z
+    }
+    
+
 
 ```
 
@@ -350,5 +369,29 @@ Ademas faltaria realizar la produccion de aquellas sentencias que faltan o que n
 ## Ejercicio 14: 
 
 ### Sobre un lenguaje de su preferencia escriba en EBNF la gramática para la definición de funciones o métodos o procedimientos (considere los parámetros en caso de ser necesario).
+
+```html
+
+    G = (N, T, S, P)
+    N = {
+       <function>
+        <parametros>
+        <palabra>
+        <codigo>
+        <letra>
+        <operadores>
+    }
+    T = {A | B | C | D | E ... Z | a | b | c | d | e | f | g  ... z}
+    S = <function>
+    
+    P = {
+        <function>::= "function" [<parametros>] "{"  {<codigo>}+ "}"
+        <parametros>::=  "("{<palabra> ","}*")"
+        <palabra>::= {<letra>}+
+        <codigo>::=  { {<letra>}+ {<operadores>} {<letra>}+ }* (|) {<letra>}+';'
+        <letra>::= A | B | C | D | E ... Z | a | b | c | d | e | f | g  ... z
+        <operadores>::= + (|) = (|) - (|) * (|) . (|) / (|) > (|) < 
+    }
+```
 
 

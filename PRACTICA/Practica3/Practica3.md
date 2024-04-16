@@ -122,14 +122,15 @@ Aclaración: Los valores de la ayuda pueden ser mayores.
 a) Pascal
 
 ```Pascal
+
     Program P
     var 5: integer; // Sintactico : El nombre de la variable no puede comenzar con un número
-    var a:char;
+    var a:char; //Sintactico : La palabra reservada VAR va solo una vez
     Begin
         for i:=5 to 10 do // Semantico : i no esta declarada
         begin
             write(a); // Semantico : se intenta imprimir a pero no esta inicializada
-            a=a+1; // Sintactico : La asignación debe ser con ":="
+            a=a+1; // Sintactico : La asignación debe ser con ":=" // Semantico: no se puede sumar a una variable de tipo char un entero
         end;
     End.
 
@@ -142,11 +143,11 @@ b) Java:
 
 ```Java
 
-    public String tabla(int numero, arrayList<Boolean> listado){
+    public String tabla(int numero, arrayList<Boolean> listado){ // Sintactico: ArrayList va con mayúscula.
         String result = null;
         for(i = 1; i < 11; i--) { // Semantico : no esta declarada // Logico : i deberia aumentar no disminuir
             result += numero + "x" + i + "=" + (i*numero) + "\n"; // Sintactico : La variable i no esta declarada
-            listado.get(listado.size()-1)=(BOOLEAN) numero>i; //Semantico: Se está intentando asignar un valor booleano a un elemento de la lista 
+            listado.get(listado.size()-1)=(BOOLEAN) numero>i; //Semantico: Se está intentando asignar un valor booleano a un elemento de la lista //Sintactico : No existe wl tipo BOOLEAN deberia ser Boolean o boolean
         }
         return true; // Semantico : la funcion debe retornar un String
     }
@@ -162,19 +163,19 @@ c) C
     int main()
     {  
         int indice;
-        encabezado; // Error sintáctico: Falta el símbolo '#' antes de 'encabezado'
-        for (indice = 1 ; indice <= 7 ; indice ++) {
+        encabezado; // Error sintactico: Falta el símbolo '#' antes de 'encabezado'
+        for (indice = 1 ; indice <= 7 ; indice ++) //Error sintactico : Para incluir sentencias dentro de un for se debe cerrar entre {}
             cuadrado (indice);
-        }
-        final(); Llama a la función final */ // Error sintáctico: Este comentario está mal colocado
+        
+        final(); //Error semantico: no esta declarada Llama a la función final */ // Error sintactico: Este comentario está mal colocado
         return 0;
     }
 
-    cuadrado (numero) // Error sintáctico: Se debe especificar el tipo de dato de los parámetros
-    int numero; // Error Semantico : Se debe declarar antes que cuadrado(numero)
+    cuadrado (numero) // Error sintactico: Se debe especificar el tipo de dato de los parámetros || Error sintactico: las llaves de la funcion cuadrado estan mal colocadas || Error semantico: la función cuadrado está mal declarada. || Error semantico: falta el tipo de parámetro que es número en la definición de la función cuadrado. || Error semantico: la función cuadrado no tiene tipo de retorno
+    int numero; // Error semantico : Se debe declarar antes o dentro de cuadrado(numero)
     {   
         int numero_cuadrado;
-        numero_cuadrado == numero * numero; // Error Semantico: Debería ser una asignación, no una comparación
+        numero_cuadrado == numero * numero; // Error semantico: Debería ser una asignación, no una comparación
         suma += numero_cuadrado;
         printf("El cuadrado de %d es %d\n", numero, numero_cuadrado);
     }
@@ -218,12 +219,12 @@ e) Ruby
     def ej1
         puts 'Hola, ¿Cuál es tu nombre?'
         nom = gets.chomp
-        puts 'Mi nombre es ' + nom
-        puts 'Mi sobrenombre es Juan'
+        puts 'Mi nombre es ', + nom # Semantico : La coma esta fuera de las comillas
+        puts 'Mi sobrenombre es 'Juan'' # Semantico : Estan mal cerrada las comillas
         puts 'Tengo 10 años'
-        meses = edad * 12 # Semantico : edad no esta definida todavia
-        dias = meses * 30
-        hs = dias * 24
+        meses = edad * 12 # Semantico : edad no esta definida todavia 
+       	dias = 'meses' *30 #Error Semantico: Para calcular la cantidad de días, se está multiplicando un string por un entero, cuando en realidad se debe multiplicar el valor entero de meses por 30. Se detecta en ejecución.
+        hs= 'dias * 24'
         puts 'Eso es: ' + meses.to_s + ' meses o ' + dias.to_s + ' días o ' + hs.to_s + ' horas'
         puts 'Vos cuántos años tenés'
         edad2 = gets.chomp
@@ -333,20 +334,78 @@ Observación: Aquí sólo se debe definir la instrucción y qué es lo que hace 
 
 ### Explique cuál es la semántica para las variables predefinidas en lenguaje Ruby self y nil. ¿Qué valor toman; cómo son usadas por el lenguaje?
 
-```
+Self:
+
+- Es una variable especial que hace referencia al objeto actual en el contexto actual.
+- Se utiliza para acceder a métodos y variables de instancia del objeto actual.
+- Fuera del contexto de cualquier objeto, self se refiere a la clase en la que se está definiendo el código.
+
+nil:
+
+- Es un objeto que representa la ausencia de un valor o la falta de definición de un objeto.
+- Es el único objeto de clase NilClass en Ruby y es utilizado para indicar la ausencia de un valor o para inicializar variables que aún no tienen un valor asignado.
+- Se usa como un valor predeterminado o para manejar casos en los que no hay un resultado válido.
+- Se evalúa como falso en contextos booleanos.
+- Es un objeto y puede tener métodos definidos en su clase NilClass, lo que permite realizar operaciones específicas en nil, como nil.to_s para obtener una representación en cadena de nil.
 
 
 
-```
 
-
-
-
-## Ejercicio 7: 
-
+## Ejercicio 7:
 ### Determine la semántica de null y undefined para valores en javascript.¿Qué diferencia hay entre ellos?
-## Ejercicio 8: 
 
+Son dos valores que representan la ausencia de valor, pero tienen algunas diferencias importantes en cuanto a su semántica y su uso:
+
+null:
+
+- Es un valor que indica explícitamente la ausencia de un valor o la no existencia de un objeto.
+- Es un valor primitivo en JavaScript y es asignado a variables o propiedades cuando se quiere indicar que no hay ningún valor válido presente.
+- A diferencia de undefined, null es un valor asignable, lo que significa que se puede asignar explícitamente a una variable para indicar que no hay ningún valor.
+
+Undefined:
+
+- Indica que una variable ha sido declarada pero no inicializada, o que una propiedad de un objeto no existe o no tiene un valor asignado.
+- Es un valor primitivo en JavaScript que representa la ausencia intencional o no intencional de un valor.
+- Las variables en JavaScript que no han sido inicializadas tienen automáticamente el valor undefined.
+- Cuando se accede a una propiedad de un objeto que no existe, JavaScript devuelve undefined.
+- A diferencia de null, no es un valor asignable.
+
+En resumen son ambos valores que indican la ausencia de valor en JavaScript, pero null se utiliza típicamente cuando se desea indicar explícitamente que no hay un valor válido presente, mientras que undefined se utiliza para variables no inicializadas o propiedades que no existen en un objeto. Además, null es asignable, mientras que undefined no lo es.
+
+## Ejercicio 8: 
 ### Determine la semántica de la sentencia break en C, PHP, javascript y Ruby. Cite las características más importantes de esta sentencia para cada lenguaje
+
+**C**:
+
+En C, la sentencia break se utiliza dentro de bucles for, while y do-while para salir prematuramente del bucle. Cuando se encuentra una sentencia break dentro de un bucle, el control del programa se transfiere inmediatamente fuera del bucle y la ejecución continúa con la primera línea de código después del bucle. Es útil para salir de un bucle antes de que se complete su iteración completa, basado en alguna condición específica.
+
+**PHP**:
+
+En PHP se utiliza de manera similar a C, dentro de bucles for, while y do-while. Cuando se encuentra un break, se corta la ejecución de la estructura de control y la ejecución continúa en la línea luego del bucle. Es útil para salir de un bucle antes de que se complete su iteración completa.
+
+**JavaScript**:
+
+En JavaScript su uso no difere mucho del uso en C o PHP. En un bucle etiquetado permite salir de un bucle anidado específico cuando se encuentra una condición adecuada, lo que es útil para controlar flujos de bucles más complejos.
+
+**Ruby**:
+
+En Ruby, el caso es igual. Ruby también admite break con un valor opcional, que puede ser útil para devolver un valor específico cuando se rompe el bucle.
+
 ## Ejercicio 9:
 ### Defina el concepto de ligadura y su importancia respecto de la semántica de un programa. ¿Qué diferencias hay entre ligadura estática y dinámica? Cite ejemplos (proponer casos sencillos)
+
+La ligadura es el momento en que un atributo se asocia con su valor. Es uno de los conceptos más importantes en la semántica de los lenguajes de programación ya que en los programas se trabaja con entidades, y estas entidades deben tener valores para poder usarse, y estos valores son dados a las entidades a través de la ligadura.
+
+**Ligadura estática:**
+
+- Se establece antes de la ejecución.
+- No se puede modificar.
+
+`int` en C, define tipos permitidos y cómo se escriben, que se usarán para enteros y lo vincula a operaciones algebraicas.
+
+**Ligadura dinámica:**
+
+1. Se establece durante la ejecución.
+2. Se puede modificar durante ejecución de acuerdo a alguna regla específica del lenguaje.
+
+`int a; a =10; a = 96;` El valor de una variable entera se liga en ejecución y puede cambiar muchas veces
